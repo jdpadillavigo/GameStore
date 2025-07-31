@@ -2,18 +2,18 @@ import './GamingNews.css'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import VerNoticias, { nota } from '../../components/Tidings/viewTidings'
-const URL = "http://localhost:5000"
+import { BACKEND_URL } from '../../config/env'
 
 const Explore = () => {
   const navigate = useNavigate()
 
-  const [ lista, setLista ] = useState<nota[]>([])
-  const httpObtenerNoticias = async() => {
-    try{
-      const response = await fetch(`${URL}/noticias`)
+  const [lista, setLista] = useState<nota[]>([])
+  const httpObtenerNoticias = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/noticias`)
       const data = await response.json()
       setLista(data)
-    }catch(error) {
+    } catch (error) {
       console.error(error);
     }
   }
@@ -62,20 +62,20 @@ const Explore = () => {
     return ['Todos', ...Array.from(new Set(todosAutores))]
   }
   return (
-      <div className='news-page'>
-          <h1 className='title_noticias'>Noticias</h1>
-          <VerNoticias
-            registros={noticiasFiltradas(lista)}
-            categorias={categoriasUnicas(lista)}
-            categoriaSeleccionada={categoriaSeleccionada}
-            setCategoriaSeleccionada={setCategoriaSeleccionada}
-            autores={autoresUnicos(lista)}
-            autorSeleccionado={autorSeleccionado}
-            setAutorSeleccionado={setAutorSeleccionado}
-            orden={orden}
-            setOrden={setOrden}
-          />
-      </div>
+    <div className='news-page'>
+      <h1 className='title_noticias'>Noticias</h1>
+      <VerNoticias
+        registros={noticiasFiltradas(lista)}
+        categorias={categoriasUnicas(lista)}
+        categoriaSeleccionada={categoriaSeleccionada}
+        setCategoriaSeleccionada={setCategoriaSeleccionada}
+        autores={autoresUnicos(lista)}
+        autorSeleccionado={autorSeleccionado}
+        setAutorSeleccionado={setAutorSeleccionado}
+        orden={orden}
+        setOrden={setOrden}
+      />
+    </div>
   )
 }
 

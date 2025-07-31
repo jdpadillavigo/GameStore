@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { BACKEND_URL } from '../config/env';
 
 interface Review {
   author: string;
@@ -34,8 +35,6 @@ interface GamesProviderProps {
 }
 
 const GamesContext = createContext<GamesContextType | undefined>(undefined);
-
-const BACKEND_URL = 'http://localhost:5000';
 
 export const GamesProvider = ({ children }: GamesProviderProps) => {
   const [games, setGames] = useState<Record<string, Game>>({});

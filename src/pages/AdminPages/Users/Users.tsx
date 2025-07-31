@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import './Users.css';
+import { BACKEND_URL } from '../../../config/env';
 
 const Users: React.FC = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mensaje, setMensaje] = useState('');
-  const BACKEND_URL = "http://localhost:5000";
 
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
         const response = await fetch(`${BACKEND_URL}/a/usuarios`);
+
         const data = await response.json();
 
         const soloUsuarios = data.filter((usuario: any) => usuario.role === 'usuario');

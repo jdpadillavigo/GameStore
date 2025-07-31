@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import './News.css'
 import { nota } from '../../../components/Tidings/viewTidings'
 import CrudNoticia from '../../../components/Tidings/Admin/Create_update_noticia'
-const URL = "http://localhost:5000"
+import { BACKEND_URL } from '../../../config/env'
 
 const ExploreAD = () => {
   const [creando, setCreando] = useState(false)
@@ -10,58 +10,59 @@ const ExploreAD = () => {
   const [eliminando, setEliminando] = useState<nota | null>(null)
   const [modoEliminar, setModoEliminar] = useState(false)
 
-  const [ lista, setLista ] = useState<nota[]>([])
+  const [lista, setLista] = useState<nota[]>([])
 
-  const httpObtenerNoticias = async() => {
-    try{
-      const response = await fetch(`${URL}/noticias`)
+  const httpObtenerNoticias = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/noticias`)
       const data = await response.json()
       setLista(data)
-    }catch(error) {
+    } catch (error) {
       console.error(error);
     }
   }
+
   useEffect(() => {
     httpObtenerNoticias()
   }, [])
 
-  const httpInsertarNoticia = async (elem : nota) => {
-    try{
-      const resp = await fetch(`${URL}/noticias`, {
-        method : "post",
-        headers : {
-          "Content-Type" : "application/json"
+  const httpInsertarNoticia = async (elem: nota) => {
+    try {
+      const resp = await fetch(`${BACKEND_URL}/noticias`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json"
         },
-        body : JSON.stringify(elem)
+        body: JSON.stringify(elem)
       })
       const data = await resp.json()
       console.log('Noticias recibidas:', data)
-    }catch(error){
+    } catch (error) {
       console.error(error)
     }
   }
 
-  const httpEditarNoticia = async (elem : nota) => {
-    try{
-      const resp = await fetch(`${URL}/noticias/${elem.id}`, {
-        method : "PUT",
-        headers : {
-          "Content-Type" : "application/json"
+  const httpEditarNoticia = async (elem: nota) => {
+    try {
+      const resp = await fetch(`${BACKEND_URL}/noticias/${elem.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
         },
-        body : JSON.stringify(elem)
+        body: JSON.stringify(elem)
       })
-    } catch(error){
+    } catch (error) {
       console.error(error)
     }
   }
 
-  const httpEliminarNoticia = async (ntId : number) => {
-    try{
-      const resp = await fetch(`${URL}/noticias/${ntId}`, {
-        method : "DELETE",
-        body : JSON.stringify(ntId)
+  const httpEliminarNoticia = async (ntId: number) => {
+    try {
+      const resp = await fetch(`${BACKEND_URL}/noticias/${ntId}`, {
+        method: "DELETE",
+        body: JSON.stringify(ntId)
       })
-    } catch(error){
+    } catch (error) {
       console.error(error)
     }
   }
@@ -117,7 +118,7 @@ const ExploreAD = () => {
 
   return (
     <div>
-      <div className="space_white_admin"/>
+      <div className="space_white_admin" />
       <div className='container'>
         <div className='workspace_container'>
           {/* Lista de noticias siempre visible */}
@@ -143,8 +144,8 @@ const ExploreAD = () => {
                         <div className="ad_categoria_nota"><strong>Categoria:</strong> {elemento.category} </div>
                         <div className="ad_dias_nota">
                           {elemento.days === 0
-                          ? `Redactado hoy`
-                          : `Redactado hace ${elemento.days} días`}
+                            ? `Redactado hoy`
+                            : `Redactado hace ${elemento.days} días`}
                         </div>
                       </div>
                       <div className="ad_img_nota">

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Confirmation.css';
+import { BACKEND_URL } from '../../config/env';
 
 const Verification: React.FC = () => {
   const [confirmacionCodigo, setConfirmacionCodigo] = useState('');
   const [mensaje, setMensaje] = useState('');
   const navigate = useNavigate();
-  const BACKEND_URL = "http://localhost:5000";
 
   const handleConfirm = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,7 +42,7 @@ const Verification: React.FC = () => {
         }
 
         setMensaje('Usuario registrado exitosamente ✅');
-        
+
         localStorage.removeItem('usuarioPorRegistrar');
 
         setTimeout(() => {
